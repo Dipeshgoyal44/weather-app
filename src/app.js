@@ -55,14 +55,18 @@ app.get('/weather', (req,res) => {
             return res.send({error})
         }
    
-       forecast(latitude,longitude, (error,forecastData) => {
+       forecast(latitude,longitude, (error,{temp,summary,high,low} = {}) => {
            if (error) {
                return console.log(error)
-           } 
+           }
 res.send({
-    forecast: forecastData,
     location,
-    address: address
+    address,
+    temp,
+    summary,
+    high,
+    low
+    
           })
         }) 
     })
@@ -86,5 +90,5 @@ app.get('*' , (req,res) => {
 })
 
 app.listen(port, () => {
-    console.log('Server running on port' + port + '!')
+    console.log('Server running on port ' + port + '!')
 })
